@@ -25,3 +25,33 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+# api 
+ 
+  接口调用 
+
+# base
+  
+  基础组件
+
+
+# common
+   
+  公共资源
+  
+# components
+
+  组件
+ 
+# router
+ 
+  路由
+
+# store 
+
+  状态管理
+
+
+
+       

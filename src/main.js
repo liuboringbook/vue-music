@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import fastclick from 'fastclick'
+import './common/stylus/index.styl' //公共样式文件
+
+fastclick.attach(document.body)
 
 Vue.config.productionTip = false
 
