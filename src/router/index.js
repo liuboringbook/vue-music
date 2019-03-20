@@ -1,34 +1,35 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import rank from '@/components/rank/rank.vue'
-import recommend from '@/components/recommend/recommend.vue'
-import search from '@/components/search/search.vue'
-import singer from '@/components/singer/singer.vue'
+import Rank from '@/components/rank/rank.vue'
+import Recommend from 'components/recommend/recommend.vue'
+import Search from '@/components/search/search.vue'
+import Singer from '@/components/singer/singer.vue'
 
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
+  mode: 'history',
+  routers:[
     {
-      path:'/rank',
-      name: 'rank',
-      component: 'rank'
+      path:'/',
+      redirect:"/recommend"
     },
     {
       path:'/recommend',
-      name: 'recommend',
-      component: 'recommend'
+      components: Recommend
     },
     {
-      path:'/search',
-      name: 'search',
-      component: 'search'
+      path:'/singer',
+      components: Singer
     },
     {
       path:'/rank',
-      name: 'singer',
-      component: 'singer'
+      components:Rank
+    },
+    {
+      path:'search',
+      component: Search
     }
   ]
 })
