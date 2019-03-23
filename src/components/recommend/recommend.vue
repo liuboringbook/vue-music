@@ -1,74 +1,86 @@
 <template>
   <div class="recommend">
     <scroll ref="scroll" class="recommend-content" :data="disList">
-<div>
-  <div class="slider-wrapper" v-if="recommends.length">
-    <slider>
-      <div v-for="item in recommends">
-        <a :href="item.linkUrl">
-          <img :src="item.picUrl" alt="">
-        </a>
+      <div>
+        <div class="slider-wrapper" v-if="recommends.length">
+          <slider>
+            <div v-for="item in recommends">
+              <a :href="item.linkUrl">
+                <img :src="item.picUrl"  @load="loadImage" class="needsclick">
+              </a>
+            </div>
+          </slider>
+        </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li v-for="item in disList" class="item">
+              <div class="icon">
+                <img  v-lazy="item.imgurl" width="60" height="60">
+              </div>
+              <div class="text">
+                <h2 class="name" v-html="item.creator.name"></h2>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-    </slider>
-  </div>
-  <div class="recommend-list">
-    <h1 class="list-title">热门歌单推荐</h1>
-    <ul>
-      <li v-for="item in disList" class="item">
-        <div class="icon">
-          <img :src="item.imgurl" width="60" height="60">
-        </div>
-        <div class="text">
-          <h2 class="name" v-html="item.creator.name"></h2>
-          <p class="desc" v-html="item.dissname"></p>
-        </div>
-      </li>
-    </ul>
-  </div>
-</div>
+      <div class="loading-container" v-show="!disList.length">
+        <loading>
+        </loading>
+      </div>
     </scroll>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import Scroll from 'base/scroll/scroll'
-import Slider from '@/base/slider/slider'
-import {getRecommend,getDiscList} from 'api/recommend'
-import {ERR_OK} from 'api/config'
+  import Loading from 'base/loading/loading'
+  import Scroll from 'base/scroll/scroll'
+  import Slider from '@/base/slider/slider'
+  import {getRecommend,getDiscList} from 'api/recommend'
+  import {ERR_OK} from 'api/config'
 
-export default {
-  data(){
-    return {
-      recommends:[],
-      disList:[]
-    }
-  },
-  created(){
-    this._getCommend();
-    this._getDiscList();
-  },
-  methods:{
-    _getCommend(){
-      getRecommend().then((res) =>{
-        if(res.code === ERR_OK){
-          this.recommends = res.data.slider;
-          console.log(this.recommends)
-        }
-      })
+  export default {
+    data(){
+      return {
+        recommends:[],
+        disList:[]
+      }
     },
-    _getDiscList(){
-      getDiscList().then((res)=>{
-        if(res.code === ERR_OK){
-          this.disList = res.data.list
+    created(){
+      this._getCommend();
+      this._getDiscList();
+    },
+    methods:{
+      _getCommend(){
+        getRecommend().then((res) =>{
+          if(res.code === ERR_OK){
+            this.recommends = res.data.slider;
+            console.log(this.recommends)
+          }
+        })
+      },
+      _getDiscList(){
+        getDiscList().then((res)=>{
+          if(res.code === ERR_OK){
+            this.disList = res.data.list
+          }
+        })
+      },
+      loadImage(){
+        if(!this.checkLoaded){
+          this.$refs.scroll.refresh();
+          this.checkLoaded =true
         }
-      })
+      }
+    },
+    components: {
+      Slider,
+      Scroll,
+      Loading
     }
-  },
-  components: {
-    Slider,
-    Scroll
   }
-}
 
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
