@@ -3,7 +3,7 @@
     <slot></slot>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
    import BScroll from 'better-scroll'
    export default {
      props: {
@@ -18,7 +18,12 @@
        data: {
          type: Array,
          default: null
-       }
+       },
+       listenScroll: { //是否监听滚动事件
+         type: Boolean,
+         default: false
+       },
+
      },
      mounted() {
        setTimeout(()=>{
@@ -34,6 +39,12 @@
             probeType: this.probeType,
             click: this.click
           })
+         if(this.listenScroll){
+           let me = this
+           this.scroll.on('scroll',(pos)=>{
+             me.$emit('scroll',pos)
+           })
+         }
        },
        //作用：启用 better-scroll, 默认 开启。
        enable(){
@@ -47,6 +58,10 @@
        refresh(){
          this.scroll && this.scroll.refresh()
        },
+       //跳转到页面元素
+       scrollToElement() {
+         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
+       }
      },
      watch: {
        data(){
