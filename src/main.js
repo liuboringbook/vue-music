@@ -6,6 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import './common/stylus/index.styl' //公共样式文件
+import store from './store'
 
 
 fastclick.attach(document.body)
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
