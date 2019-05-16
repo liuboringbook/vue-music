@@ -1,5 +1,6 @@
 //状态
 const state = {
-  singer:{}
+  singer:{},
+  disc:{}
 }
 export default state
